@@ -29,8 +29,17 @@
             make.edges.mas_equalTo(UIEdgeInsetsMake(1, 1, 1, 1));
         }];
         
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tap:)];
+        [self addGestureRecognizer:tap];
     }
     return self;
+}
+
+- (void)tap:(UITapGestureRecognizer *)tap {
+    if (self.selectCellBlock) {
+        self.dayLabel.textColor = [UIColor grayColor];
+        self.selectCellBlock();
+    }
 }
 
 @end

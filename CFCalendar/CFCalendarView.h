@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^SelectedDateBlock)(NSInteger year,NSInteger month,NSInteger day);
+
 @interface CFCalendarView : UIView
 
-+(instancetype)initWithFrame:(CGRect)frame year:(NSInteger)year month:(NSInteger)month superView:(UIView *)superView;
++(instancetype)initWithFrame:(CGRect)frame year:(NSInteger)year month:(NSInteger)month superView:(UIView *)superView selectedDateBlock:(SelectedDateBlock)selectedBlock;
 
 @end

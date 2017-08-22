@@ -16,22 +16,24 @@
 @property (nonatomic, assign) NSInteger    year;
 @property (nonatomic, assign) NSInteger    month;
 @property (nonatomic, strong) NSMutableArray   *dayArray;
+@property (nonatomic, copy)   SelectedDateBlock selectedBlock;
 
 @end
 
 @implementation CFCalendarView
 
-+(instancetype)initWithFrame:(CGRect)frame year:(NSInteger)year month:(NSInteger)month superView:(UIView *)superView {
++(instancetype)initWithFrame:(CGRect)frame year:(NSInteger)year month:(NSInteger)month superView:(UIView *)superView selectedDateBlock:(SelectedDateBlock)selectedBlock {
     
-    return [[self alloc]initWithFrame:frame year:year month:month superView:superView];
+    return [[self alloc]initWithFrame:frame year:year month:month superView:superView selectedDateBlock:selectedBlock];
 }
 
--(instancetype)initWithFrame:(CGRect)frame year:(NSInteger)year month:(NSInteger)month superView:(UIView *)superView {
+-(instancetype)initWithFrame:(CGRect)frame year:(NSInteger)year month:(NSInteger)month superView:(UIView *)superView selectedDateBlock:(SelectedDateBlock)selectedBlock  {
     self = [super initWithFrame:frame];
     if (self) {
         
         self.year = year;
         self.month = month;
+        self.selectedBlock = selectedBlock;
         self.dayArray = [NSMutableArray array];
         
         CFMonthEntity *monthEntity = [[CFMonthEntity alloc]init];
@@ -46,7 +48,6 @@
             dayEntity.currentMonthDay = YES;
             [self.dayArray addObject:dayEntity];
         }
-        
         
         CFDayEntity *firstDayEntity = self.dayArray.firstObject;
         for (int i=0; i<firstDayEntity.week; i++) {
@@ -67,20 +68,26 @@
         CGFloat cellWidth = self.bounds.size.width/7;
         CGFloat cellHeight = self.bounds.size.height/6;
         
+        __block CFCalendarView *weakSelf = self;
+        
         for (int i=0; i<self.dayArray.count; i++) {
             
             CFCalendarCell *cell = [[CFCalendarCell alloc]init];
             cell.frame = CGRectMake(i%7*cellWidth, i/7*cellHeight, cellWidth, cellHeight);
             [self addSubview:cell];
-            
             CFDayEntity *dayEntity = self.dayArray[i];
-            
             if (dayEntity.currentMonthDay) {
                 cell.dayLabel.text = [NSString stringWithFormat:@"%ld",(long)dayEntity.day];
                 cell.dayLabel.hidden = NO;
             } else {
                 cell.dayLabel.hidden = YES;
             }
+            
+            cell.selectCellBlock = ^{
+                if (weakSelf.selectedBlock) {
+                    weakSelf.selectedBlock(weakSelf.year, weakSelf.month, dayEntity.day);
+                }
+            };
         }
         
         [superView addSubview:self];
