@@ -92,9 +92,7 @@
     [CFCalendarView initWithFrame:CGRectMake(0, 0, kMainWidth, 300) year:[[self lastYearMonth][0] integerValue] month:[[self lastYearMonth][1] integerValue] superView:self.scrollView selectedDateBlock:nil];
     
     [CFCalendarView initWithFrame:CGRectMake(kMainWidth, 0, kMainWidth, 300) year:self.currentYear month:self.currentmonth superView:self.scrollView selectedDateBlock:^(NSInteger year, NSInteger month, NSInteger day) {
-        
-        NSLog(@"===%ld年%ld月%ld日",year,month,day);
-        
+        NSLog(@"=====================%ld==%ld==%ld",(long)year,month,day);
     }];
     
     [CFCalendarView initWithFrame:CGRectMake(2*kMainWidth, 0, kMainWidth, 300) year:[[self nextYearMonth][0] integerValue] month:[[self nextYearMonth][1] integerValue] superView:self.scrollView selectedDateBlock:nil];

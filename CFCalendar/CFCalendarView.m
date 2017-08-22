@@ -13,10 +13,7 @@
 
 @interface CFCalendarView ()
 
-@property (nonatomic, assign) NSInteger    year;
-@property (nonatomic, assign) NSInteger    month;
 @property (nonatomic, strong) NSMutableArray   *dayArray;
-@property (nonatomic, copy)   SelectedDateBlock selectedBlock;
 
 @end
 
@@ -31,9 +28,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        self.year = year;
-        self.month = month;
-        self.selectedBlock = selectedBlock;
         self.dayArray = [NSMutableArray array];
         
         CFMonthEntity *monthEntity = [[CFMonthEntity alloc]init];
@@ -63,18 +57,15 @@
         }
         
         //至此数组里一定有42个对象，下面布局就容易了
-        
         //42个cell,6行7列
         CGFloat cellWidth = self.bounds.size.width/7;
         CGFloat cellHeight = self.bounds.size.height/6;
         
-        __block CFCalendarView *weakSelf = self;
-        
         for (int i=0; i<self.dayArray.count; i++) {
-            
             CFCalendarCell *cell = [[CFCalendarCell alloc]init];
             cell.frame = CGRectMake(i%7*cellWidth, i/7*cellHeight, cellWidth, cellHeight);
             [self addSubview:cell];
+            
             CFDayEntity *dayEntity = self.dayArray[i];
             if (dayEntity.currentMonthDay) {
                 cell.dayLabel.text = [NSString stringWithFormat:@"%ld",(long)dayEntity.day];
@@ -82,14 +73,12 @@
             } else {
                 cell.dayLabel.hidden = YES;
             }
-            
             cell.selectCellBlock = ^{
-                if (weakSelf.selectedBlock) {
-                    weakSelf.selectedBlock(weakSelf.year, weakSelf.month, dayEntity.day);
+                if (selectedBlock) {
+                    selectedBlock(dayEntity.year, dayEntity.month, dayEntity.day);
                 }
             };
         }
-        
         [superView addSubview:self];
     }
     return self;

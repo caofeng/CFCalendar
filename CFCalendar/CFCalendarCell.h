@@ -12,6 +12,6 @@
 
 @property (nonatomic, strong, readonly) UILabel   *dayLabel;
 
-@property (nonatomic, copy) void(^selectCellBlock)();
+@property (nonatomic, copy) void(^selectCellBlock)(void);
 
 @end

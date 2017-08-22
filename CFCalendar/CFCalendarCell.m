@@ -36,8 +36,8 @@
 }
 
 - (void)tap:(UITapGestureRecognizer *)tap {
+    
     if (self.selectCellBlock) {
-        self.dayLabel.textColor = [UIColor grayColor];
         self.selectCellBlock();
     }
 }
