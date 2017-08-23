@@ -11,6 +11,7 @@
 @interface CFCalendarCell ()
 
 @property (nonatomic, strong) UILabel   *dayLabel;
+@property (nonatomic, strong) UIView    *dotView;
 
 @end
 
@@ -40,6 +41,24 @@
     if (self.selectCellBlock) {
         self.selectCellBlock();
     }
+}
+
+- (UIView *)dotView {
+    
+    if (!_dotView) {
+        
+        _dotView = [[UIView alloc]init];
+        _dotView.layer.cornerRadius = 4;
+        _dotView.layer.masksToBounds = YES;
+        _dotView.backgroundColor = [UIColor redColor];
+        [self addSubview:_dotView];
+        [_dotView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(8, 8));
+            make.top.equalTo(@10);
+            make.right.equalTo(@-10);
+        }];
+    }
+    return _dotView;
 }
 
 @end

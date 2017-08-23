@@ -23,4 +23,17 @@
     return comps.weekday-1;
 }
 
+- (BOOL)currentDay {
+   
+    NSDate * date = [NSDate date];
+    NSCalendar * calendar = [NSCalendar currentCalendar];
+    
+    NSDateComponents *comps = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitSecond|NSCalendarUnitWeekday|NSCalendarUnitWeekdayOrdinal fromDate:date];
+    
+    if (comps.year == self.year && comps.month == self.month && comps.day == self.day) {
+        return YES;
+    }
+    return NO;
+}
+
 @end

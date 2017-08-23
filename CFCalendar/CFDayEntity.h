@@ -13,13 +13,15 @@
 @property (nonatomic, assign) NSInteger year;
 /** 当前天所在的月份 */
 @property (nonatomic, assign) NSInteger month;
-/** 当前天 */
+/** 天 */
 @property (nonatomic, assign) NSInteger day;
 /** 当前周几 */
 @property (nonatomic, assign) NSInteger week;
-/** 是否是用户所选中的天 */
-@property (nonatomic, assign) BOOL selectedDay;
 /** 是否是当月的天 */
 @property (nonatomic, assign) BOOL currentMonthDay;
+/** 是否是当月的天 */
+@property (nonatomic, assign) BOOL currentDay;
+/** 被选中的天 */
+@property (nonatomic, assign) BOOL selectedDay;
 
 @end

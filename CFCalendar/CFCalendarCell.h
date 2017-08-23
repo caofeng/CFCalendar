@@ -11,6 +11,7 @@
 @interface CFCalendarCell : UIView
 
 @property (nonatomic, strong, readonly) UILabel   *dayLabel;
+@property (nonatomic, strong, readonly) UIView    *dotView;
 
 @property (nonatomic, copy) void(^selectCellBlock)(void);
 

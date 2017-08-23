@@ -27,7 +27,6 @@
 -(instancetype)initWithFrame:(CGRect)frame year:(NSInteger)year month:(NSInteger)month superView:(UIView *)superView selectedDateBlock:(SelectedDateBlock)selectedBlock  {
     self = [super initWithFrame:frame];
     if (self) {
-        
         self.dayArray = [NSMutableArray array];
         
         CFMonthEntity *monthEntity = [[CFMonthEntity alloc]init];
@@ -62,16 +61,21 @@
         CGFloat cellHeight = self.bounds.size.height/6;
         
         for (int i=0; i<self.dayArray.count; i++) {
+            
             CFCalendarCell *cell = [[CFCalendarCell alloc]init];
             cell.frame = CGRectMake(i%7*cellWidth, i/7*cellHeight, cellWidth, cellHeight);
             [self addSubview:cell];
             
             CFDayEntity *dayEntity = self.dayArray[i];
+            
             if (dayEntity.currentMonthDay) {
                 cell.dayLabel.text = [NSString stringWithFormat:@"%ld",(long)dayEntity.day];
                 cell.dayLabel.hidden = NO;
             } else {
                 cell.dayLabel.hidden = YES;
+            }
+            if (dayEntity.currentDay) {
+                cell.dotView.hidden = NO;
             }
             cell.selectCellBlock = ^{
                 if (selectedBlock) {

@@ -92,7 +92,15 @@
     [CFCalendarView initWithFrame:CGRectMake(0, 0, kMainWidth, 300) year:[[self lastYearMonth][0] integerValue] month:[[self lastYearMonth][1] integerValue] superView:self.scrollView selectedDateBlock:nil];
     
     [CFCalendarView initWithFrame:CGRectMake(kMainWidth, 0, kMainWidth, 300) year:self.currentYear month:self.currentmonth superView:self.scrollView selectedDateBlock:^(NSInteger year, NSInteger month, NSInteger day) {
-        NSLog(@"=====================%ld==%ld==%ld",(long)year,month,day);
+        
+        UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"%ld年%ld月%ld日",(long)year,month,day] preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        
+        [alertVC addAction:action1];
+        [self presentViewController:alertVC animated:YES completion:nil];
+        
     }];
     
     [CFCalendarView initWithFrame:CGRectMake(2*kMainWidth, 0, kMainWidth, 300) year:[[self nextYearMonth][0] integerValue] month:[[self nextYearMonth][1] integerValue] superView:self.scrollView selectedDateBlock:nil];
